@@ -14,7 +14,7 @@ public class UserRestController {
 
     @RequestMapping(value = "users/login", method = RequestMethod.POST)
     public User login(@RequestBody User user) throws UserAuthenticationException {
-        if(user != null) {
+        if (user != null) {
             User userFromDatabase = database.findByUsername(user.getUsername());
 
             if (userFromDatabase == null)

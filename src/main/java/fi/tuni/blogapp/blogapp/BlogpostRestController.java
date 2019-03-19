@@ -17,7 +17,7 @@ public class BlogpostRestController {
     BlogpostRepository database;
 
     @RequestMapping(value = "/posts/{id}",  method= RequestMethod.GET)
-    public ResponseEntity<Blogpost> fetchLocation(@PathVariable long id) throws SomethingWentWrongException {
+    public ResponseEntity<Blogpost> fetchPost(@PathVariable long id) throws SomethingWentWrongException {
         Optional<Blogpost> location = database.findById(id);
         if (location.isPresent())
             return new ResponseEntity<Blogpost>(location.get(), HttpStatus.OK);
@@ -31,7 +31,7 @@ public class BlogpostRestController {
     }
 
     @RequestMapping(value = "/posts/{id}",  method= RequestMethod.DELETE)
-    public ResponseEntity<Void> deleteLocation(@PathVariable long id) throws SomethingWentWrongException {
+    public ResponseEntity<Void> deletePost(@PathVariable long id) throws SomethingWentWrongException {
         if (database.existsById(id)) {
             database.deleteById(id);
             return new ResponseEntity<Void>(HttpStatus.OK);
