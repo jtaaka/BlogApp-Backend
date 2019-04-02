@@ -1,13 +1,10 @@
 package fi.tuni.blogapp.blogapp;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 public class Blogpost {
@@ -21,11 +18,7 @@ public class Blogpost {
     @Lob
     private String content;
 
-    @CreationTimestamp
-    private LocalDateTime createDateTime;
-
-    @UpdateTimestamp
-    private LocalDateTime updateDateTime;
+    private LocalDate date = LocalDate.now();
 
     public Blogpost() {}
 
@@ -56,21 +49,5 @@ public class Blogpost {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public LocalDateTime getCreateDateTime() {
-        return createDateTime;
-    }
-
-    public void setCreateDateTime(LocalDateTime createDateTime) {
-        this.createDateTime = createDateTime;
-    }
-
-    public LocalDateTime getUpdateDateTime() {
-        return updateDateTime;
-    }
-
-    public void setUpdateDateTime(LocalDateTime updateDateTime) {
-        this.updateDateTime = updateDateTime;
     }
 }

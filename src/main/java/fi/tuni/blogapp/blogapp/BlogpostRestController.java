@@ -56,7 +56,10 @@ public class BlogpostRestController {
     @RequestMapping(value = "/posts/{id}", method= RequestMethod.PUT)
     public Blogpost update(@PathVariable Long id, @RequestBody Blogpost post) {
         if (database.existsById(id)) {
-            database.save(post);
+            Blogpost blogpost = database.findById(id).get();
+            blogpost.setContent(post.getContent());
+            blogpost.setTitle(post.getTitle());
+            database.save(blogpost);
         }
 
         return null;
