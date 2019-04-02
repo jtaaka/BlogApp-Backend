@@ -1,5 +1,7 @@
 package fi.tuni.blogapp.blogapp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -18,6 +20,7 @@ public class Blogpost {
     @Lob
     private String content;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate date = LocalDate.now();
 
     public Blogpost() {}
