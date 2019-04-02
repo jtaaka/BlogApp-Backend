@@ -17,7 +17,7 @@ public class BlogpostRestController {
     BlogpostRepository database;
 
     @RequestMapping(value = "/posts/{id}",  method= RequestMethod.GET)
-    public ResponseEntity<Blogpost> fetchPost(@PathVariable long id) throws SomethingWentWrongException {
+    public ResponseEntity<Blogpost> fetchPost(@PathVariable Long id) throws SomethingWentWrongException {
         Optional<Blogpost> location = database.findById(id);
         if (location.isPresent())
             return new ResponseEntity<Blogpost>(location.get(), HttpStatus.OK);
@@ -31,7 +31,7 @@ public class BlogpostRestController {
     }
 
     @RequestMapping(value = "/posts/{id}",  method= RequestMethod.DELETE)
-    public ResponseEntity<Void> deletePost(@PathVariable long id) throws SomethingWentWrongException {
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) throws SomethingWentWrongException {
         if (database.existsById(id)) {
             database.deleteById(id);
             return new ResponseEntity<Void>(HttpStatus.OK);
@@ -41,7 +41,7 @@ public class BlogpostRestController {
     }
 
     @RequestMapping(value = "/posts",  method= RequestMethod.POST)
-    public  ResponseEntity<Blogpost> save(@RequestBody Blogpost post, UriComponentsBuilder b) {
+    public ResponseEntity<Blogpost> save(@RequestBody Blogpost post, UriComponentsBuilder b) {
         database.save(post);
 
         UriComponents uriComponents =
@@ -51,6 +51,15 @@ public class BlogpostRestController {
         headers.setLocation(uriComponents.toUri());
 
         return new ResponseEntity<Blogpost>(post, headers, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/posts/{id}", method= RequestMethod.PUT)
+    public Blogpost update(@PathVariable Long id, @RequestBody Blogpost post) {
+        if (database.existsById(id)) {
+            database.save(post);
+        }
+
+        return null;
     }
 
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)

@@ -1,10 +1,13 @@
 package fi.tuni.blogapp.blogapp;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
-import java.util.Objects;
+import javax.persistence.Lob;
+import java.time.LocalDateTime;
 
 @Entity
 public class Blogpost {
@@ -14,8 +17,15 @@ public class Blogpost {
     private Long id;
 
     private String title;
+
+    @Lob
     private String content;
-    private Date date = new Date();
+
+    @CreationTimestamp
+    private LocalDateTime createDateTime;
+
+    @UpdateTimestamp
+    private LocalDateTime updateDateTime;
 
     public Blogpost() {}
 
@@ -48,37 +58,19 @@ public class Blogpost {
         this.content = content;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDateTime getCreateDateTime() {
+        return createDateTime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreateDateTime(LocalDateTime createDateTime) {
+        this.createDateTime = createDateTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Blogpost blogpost = (Blogpost) o;
-        return id.equals(blogpost.id) &&
-                title.equals(blogpost.title) &&
-                content.equals(blogpost.content) &&
-                date.equals(blogpost.date);
+    public LocalDateTime getUpdateDateTime() {
+        return updateDateTime;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, content, date);
-    }
-
-    @Override
-    public String toString() {
-        return "Blogpost{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date=" + date +
-                '}';
+    public void setUpdateDateTime(LocalDateTime updateDateTime) {
+        this.updateDateTime = updateDateTime;
     }
 }
