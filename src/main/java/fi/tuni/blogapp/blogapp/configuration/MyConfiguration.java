@@ -1,4 +1,4 @@
-package fi.tuni.blogapp.blogapp;
+package fi.tuni.blogapp.blogapp.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

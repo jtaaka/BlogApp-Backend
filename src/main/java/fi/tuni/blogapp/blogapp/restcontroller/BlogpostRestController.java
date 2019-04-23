@@ -1,5 +1,7 @@
-package fi.tuni.blogapp.blogapp;
+package fi.tuni.blogapp.blogapp.restcontroller;
 
+import fi.tuni.blogapp.blogapp.model.Blogpost;
+import fi.tuni.blogapp.blogapp.repository.BlogpostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

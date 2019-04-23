@@ -1,4 +1,4 @@
-package fi.tuni.blogapp.blogapp;
+package fi.tuni.blogapp.blogapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
