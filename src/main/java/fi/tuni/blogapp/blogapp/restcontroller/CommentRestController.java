@@ -44,7 +44,7 @@ public class CommentRestController {
 
     @RequestMapping(value = "/comment",  method= RequestMethod.POST)
     public ResponseEntity<Comment> save(@RequestBody Comment comment, UriComponentsBuilder b) {
-        database.save(comment);
+        database.save(new Comment(comment.getContent(), comment.getPostId()));
 
         UriComponents uriComponents =
                 b.path("/comment/{id}").buildAndExpand(comment.getId());

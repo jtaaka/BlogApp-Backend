@@ -1,7 +1,9 @@
 package fi.tuni.blogapp.blogapp.restcontroller;
 
 import fi.tuni.blogapp.blogapp.model.Blogpost;
+import fi.tuni.blogapp.blogapp.model.Comment;
 import fi.tuni.blogapp.blogapp.repository.BlogpostRepository;
+import fi.tuni.blogapp.blogapp.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,6 +20,9 @@ public class BlogpostRestController {
 
     @Autowired
     BlogpostRepository database;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @RequestMapping(value = "/posts/{id}",  method= RequestMethod.GET)
     public ResponseEntity<Blogpost> fetchPost(@PathVariable Long id) throws SomethingWentWrongException {
@@ -36,6 +42,12 @@ public class BlogpostRestController {
     public ResponseEntity<Void> deletePost(@PathVariable Long id) throws SomethingWentWrongException {
         if (database.existsById(id)) {
             database.deleteById(id);
+            List<Comment> comments = commentRepository.findAllByPostId(id);
+
+            if (comments.size() > 0) {
+                commentRepository.deleteAll(comments);
+            }
+
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             throw new SomethingWentWrongException("delete failed");
