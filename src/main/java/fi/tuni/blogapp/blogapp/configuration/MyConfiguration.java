@@ -1,3 +1,4 @@
+/*
 package fi.tuni.blogapp.blogapp.configuration;
 
 import org.springframework.context.annotation.Bean;
@@ -21,3 +22,4 @@ public class MyConfiguration {
         };
     }
 }
+*/
