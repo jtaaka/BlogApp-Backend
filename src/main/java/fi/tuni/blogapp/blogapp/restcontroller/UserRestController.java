@@ -8,12 +8,25 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.naming.AuthenticationException;
 
+/**
+ * Rest controller for user database.
+ */
 @RestController
 public class UserRestController {
 
+    /**
+     * User database.
+     */
     @Autowired
     private UserRepository database;
 
+    /**
+     * Method for login.
+     *
+     * @param user Used to input user.
+     * @return Logged in user or null.
+     * @throws UserAuthenticationException Indicates error in user authentication.
+     */
     @RequestMapping(value = "users/login", method = RequestMethod.POST)
     public User login(@RequestBody User user) throws UserAuthenticationException {
         if (user != null) {
@@ -31,8 +44,17 @@ public class UserRestController {
         return null;
     }
 
+    /**
+     * Exception class for failure cases.
+     */
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     private class UserAuthenticationException extends AuthenticationException {
+
+        /**
+         * Method for exception message.
+         *
+         * @param msg Used to input message.
+         */
         private UserAuthenticationException(String msg) {
             super(msg);
         }

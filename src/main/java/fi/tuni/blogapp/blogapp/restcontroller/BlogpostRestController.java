@@ -15,15 +15,31 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Rest controller for blogpost database.
+ */
 @RestController
 public class BlogpostRestController {
 
+    /**
+     * Blogpost database.
+     */
     @Autowired
     BlogpostRepository database;
 
+    /**
+     * Comment database.
+     */
     @Autowired
     private CommentRepository commentRepository;
 
+    /**
+     * Method for fetching blogposts by id.
+     *
+     * @param id Used to input blogpost id.
+     * @return Blogpost by inputted id.
+     * @throws SomethingWentWrongException Thrown when no post with the inputted id.
+     */
     @RequestMapping(value = "/posts/{id}",  method= RequestMethod.GET)
     public ResponseEntity<Blogpost> fetchPost(@PathVariable Long id) throws SomethingWentWrongException {
         Optional<Blogpost> location = database.findById(id);
@@ -33,11 +49,23 @@ public class BlogpostRestController {
             throw new SomethingWentWrongException("not found");
     }
 
+    /**
+     * Method for fetching all blogposts.
+     *
+     * @return All of blogposts.
+     */
     @RequestMapping(value = "/posts",  method= RequestMethod.GET)
     public Iterable<Blogpost> fetchAll() {
         return database.findAll();
     }
 
+    /**
+     * Method for deleting blogpost by id.
+     *
+     * @param id Used to input id.
+     * @return OK status.
+     * @throws SomethingWentWrongException Indicates failure on delete process.
+     */
     @RequestMapping(value = "/posts/{id}",  method= RequestMethod.DELETE)
     public ResponseEntity<Void> deletePost(@PathVariable Long id) throws SomethingWentWrongException {
         if (database.existsById(id)) {
@@ -54,6 +82,13 @@ public class BlogpostRestController {
         }
     }
 
+    /**
+     * Method for saving blogpost.
+     *
+     * @param post Used to input post.
+     * @param b Uri builder.
+     * @return Saved post.
+     */
     @RequestMapping(value = "/posts",  method= RequestMethod.POST)
     public ResponseEntity<Blogpost> save(@RequestBody Blogpost post, UriComponentsBuilder b) {
         database.save(post);
@@ -67,6 +102,13 @@ public class BlogpostRestController {
         return new ResponseEntity<>(post, headers, HttpStatus.CREATED);
     }
 
+    /**
+     * Method for updating blogpost.
+     *
+     * @param id Used to input id.
+     * @param post Used to input blogpost.
+     * @return null.
+     */
     @RequestMapping(value = "/posts/{id}", method= RequestMethod.PUT)
     public Blogpost update(@PathVariable Long id, @RequestBody Blogpost post) {
         if (database.existsById(id)) {
@@ -79,8 +121,17 @@ public class BlogpostRestController {
         return null;
     }
 
+    /**
+     * Exception class for failure cases.
+     */
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
     private class SomethingWentWrongException extends IllegalArgumentException {
+
+        /**
+         * Method for exception message.
+         *
+         * @param msg Used to input message.
+         */
         private SomethingWentWrongException(String msg) {
             super(msg);
         }
