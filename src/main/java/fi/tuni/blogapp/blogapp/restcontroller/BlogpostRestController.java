@@ -22,7 +22,7 @@ public class BlogpostRestController {
     public ResponseEntity<Blogpost> fetchPost(@PathVariable Long id) throws SomethingWentWrongException {
         Optional<Blogpost> location = database.findById(id);
         if (location.isPresent())
-            return new ResponseEntity<Blogpost>(location.get(), HttpStatus.OK);
+            return new ResponseEntity<>(location.get(), HttpStatus.OK);
         else
             throw new SomethingWentWrongException("not found");
     }
@@ -36,7 +36,7 @@ public class BlogpostRestController {
     public ResponseEntity<Void> deletePost(@PathVariable Long id) throws SomethingWentWrongException {
         if (database.existsById(id)) {
             database.deleteById(id);
-            return new ResponseEntity<Void>(HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             throw new SomethingWentWrongException("delete failed");
         }
@@ -52,7 +52,7 @@ public class BlogpostRestController {
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());
 
-        return new ResponseEntity<Blogpost>(post, headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(post, headers, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/posts/{id}", method= RequestMethod.PUT)
@@ -68,8 +68,8 @@ public class BlogpostRestController {
     }
 
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-    class SomethingWentWrongException extends IllegalArgumentException {
-        public SomethingWentWrongException(String msg) {
+    private class SomethingWentWrongException extends IllegalArgumentException {
+        private SomethingWentWrongException(String msg) {
             super(msg);
         }
     }

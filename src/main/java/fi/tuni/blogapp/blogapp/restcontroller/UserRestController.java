@@ -32,8 +32,8 @@ public class UserRestController {
     }
 
     @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
-    class UserAuthenticationException extends AuthenticationException {
-        public UserAuthenticationException(String msg) {
+    private class UserAuthenticationException extends AuthenticationException {
+        private UserAuthenticationException(String msg) {
             super(msg);
         }
     }
